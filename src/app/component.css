@@ -1,0 +1,401 @@
+
+/*@mixin flexRow{
+    display: flex;
+  flex-direction: row;
+}
+@mixin flexColumn{
+    display: flex;
+  flex-direction: column;
+}*/
+/* Footer Style */
+.modern-footer {
+  background: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  padding: 1.5rem 2rem;
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.footer-left strong {
+  color: #2563eb; /* نفس لون البراند في الـ Navbar */
+}
+
+.footer-tagline {
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.footer-right a {
+  color: #9ca3af;
+  transition: color 0.2s;
+}
+
+.footer-right a:hover {
+  color: #2563eb;
+}
+
+/* مؤشر حالة النظام (System Status) */
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f0fdf4;
+  color: #166534;
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid #dcfce7;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background-color: #22c55e;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #22c55e;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  70% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+/* التجاوب مع الشاشات الصغيرة */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  .footer-center {
+    order: 3;
+  }
+}
+/*footer{
+ display: flex;
+  flex-direction: row;
+justify-content: space-around;
+color: #444;
+width: 100%;
+height: fit-content;
+ border: 1px solid #444;
+background-color: #050;
+position: absolute;
+bottom: 0;
+}
+  footer>div{
+ display: flex;
+  flex-direction: column;
+text-align: center;
+  }
+  footer>div>a{
+      color:white;
+    text-decoration: none;
+}
+footer>*{
+  color:white;
+}*/
+/*
+   form{
+ display: flex;
+  flex-direction: column;
+align-items: center;
+}
+    form>textarea{
+  border:none;
+  box-shadow: 0 0 10px #050;
+  background-color: white;
+  resize: none !important;
+}
+   */
+  
+/*Nav Style*/
+ /*     nav{
+        display: flex;
+  flex-direction: row;
+        align-items: center;
+        width: 100%;
+        position: fixed;
+        top:0;
+        height: 100px;
+        z-index:1;
+        justify-content: space-between;
+        border: 1px solid #444;
+         background: #050;
+        .btns-nav{
+  display: flex;
+  flex-direction: row;
+        justify-content: space-between;
+         background: #050;
+         padding: 10px;
+      button{
+            color:white;
+            border: 1px solid white;
+            background: #070;
+            margin: 10px;
+            width: 100px;
+            padding: 10px;
+        }
+         button:hover{
+       box-shadow:0 0 10px #ccc ;
+        text-shadow:0 0 10px #999 ;
+         }
+        }
+      }
+      .imguser_notif{
+      display:flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100px;
+      }
+      .notification{
+        border-radius: 0 5px 5px 0 ;
+        width: 50%;
+        height: 50%;
+        aspect-ratio: 1/1;
+        color: #00f;
+        animation: notify 1s  3 ;
+      }
+      @keyframes notify {
+        50%{
+          transform: rotateX(45deg);
+        }
+         100%{
+          transform: rotateX(-45deg);
+        }
+      }
+        #imageAuth{
+     border-radius: 100%;
+     border: 2px solid #050;
+     aspect-ratio:1/1;
+     width:50%;
+}
+*/
+/* Container de la photo et du menu */
+/* --- Variables & Base --- */
+:root {
+  --nav-bg: rgba(255, 255, 255, 0.95);
+  --primary-color: #2563eb; /* Bleu moderne */
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+  --danger: #ef4444;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --radius: 12px;
+}
+
+/* --- Layout du Navbar --- */
+.modern-nav {
+  background: var(--nav-bg);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0.6rem 2rem;
+  position: relative;
+  z-index: 100;
+  transition: all 0.3s ease;
+}
+
+/* خاص بصفحة الشات لتقليل الارتفاع وتوفير مساحة */
+.chat-mode {
+  padding: 0.4rem 1.5rem;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* --- Logo & Branding --- */
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--primary-color);
+}
+
+.logo-icon {
+  background: var(--primary-color);
+  padding: 6px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- Section Utilisateur --- */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile-menu-container {
+  position: relative;
+}
+
+.profile-trigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f3f4f6;
+  border: 1px solid black;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.profile-trigger:hover {
+  background: #e5e7eb;
+  border-color: #d1d5db;
+}
+
+.avatar-img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+}
+
+.user-id-text {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* --- Dropdown Menu --- */
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0; /* Alignement à droite pour le français */
+  background: white;
+  min-width: 220px;
+  border-radius: var(--radius);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border: 1px solid #f3f4f6;
+  padding: 8px;
+  animation: slideIn 0.2s ease-out;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.menu-header {
+  padding: 12px 16px;
+}
+
+.welcome-text {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.user-name-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin: 2px 0 0 0;
+}
+
+.menu-divider {
+  height: 1px;
+  background: #f3f4f6;
+  margin: 8px 0;
+}
+
+.dropdown-menu button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 16px;
+  border: none;
+  background: none;
+  border-radius: 8px;
+  color: var(--text-main);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-align: left;
+}
+
+.dropdown-menu button:hover {
+  background: #f9fafb;
+  color: var(--primary-color);
+}
+
+.dropdown-menu button svg {
+  color: var(--text-muted);
+}
+
+.dropdown-menu button:hover svg {
+  color: var(--primary-color);
+}
+
+.logout-btn-dropdown {
+  color: var(--danger) !important;
+}
+
+.logout-btn-dropdown svg {
+  color: var(--danger) !important;
+}
+
+.logout-btn-dropdown:hover {
+  background: #fef2f2 !important;
+}
+
+/* Rotate arrow animation */
+.rotate {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
+
+/* --- Bouton Connexion (si non connecté) --- */
+.login-btn-modern {
+  background: var(--primary-color);
+  color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.login-btn-modern:hover {
+  opacity: 0.9;
+}

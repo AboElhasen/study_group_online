@@ -1,0 +1,45 @@
+{
+  "name": "study",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node server.ts",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js",
+    "prod": "npm run build && npm run start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@auth/prisma-adapter": "^2.11.1",
+    "@prisma/client": "^6.19.2",
+    "@types/nodemailer": "^7.0.11",
+    "bcryptjs": "^3.0.3",
+    "lucide-react": "^1.9.0",
+    "next": "16.2.1",
+    "next-auth": "^4.24.14",
+    "next-cloudinary": "^6.17.5",
+    "nodemailer": "^7.0.13",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "react-hook-form": "^7.74.0",
+    "react-hot-toast": "^2.6.0",
+    "sharp": "^0.34.5",
+  "@ducanh2912/next-pwa":"^10.2.9",
+    "socket.io": "^4.8.3",
+    "socket.io-client": "^4.8.3",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/socket.io": "^3.0.1",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.1",
+    "prisma": "^6.19.2",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
