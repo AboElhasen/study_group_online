@@ -12,9 +12,8 @@ const withPWA = require("@ducanh2912/next-pwa").default({
 const nextConfig = {
   // إعدادات موقعك الأخرى هنا (إن وجدت)
   trailingSlash: true,
- experimental:{
-  allowedDevOrigins: ['swampland-scouts-area.ngrok-free.dev'],
-},};
+ turbopack:{},
+};
 
 
 module.exports = withPWA(nextConfig);
