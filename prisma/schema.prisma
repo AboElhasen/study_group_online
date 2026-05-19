@@ -1,0 +1,196 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model student {
+  Mat              Int            @id
+  name             String
+  email            String         @unique
+  role             student_role   @default(student)
+  password         String
+  resetToken       String?        @db.VarChar(255)
+  resetTokenExpiry DateTime?      @db.DateTime(0)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  groupMembers     groupMembers[]
+  receivedMessages message[]      @relation("ReceivedMessage")
+  sentMessages     message[]      @relation("SentMessage")
+  profile          profile?
+  resources        resources[]
+}
+
+model profile {
+  id        Int     @id @default(autoincrement())
+  studentId Int     @unique
+  image     String?
+  bio       String?
+  student   student @relation(fields: [studentId], references: [Mat], onDelete: Cascade)
+}
+
+model message {
+  id         Int          @id @default(autoincrement())
+  content    String       @db.Text
+  senderId   Int
+  receiverId Int?
+  groupId    Int?
+  isRead     Boolean      @default(false)
+  createdAt  DateTime     @default(now())
+  type       message_type
+  resourceId Int?
+  group      groups?      @relation(fields: [groupId], references: [id], onDelete: Restrict)
+  receiver   student?     @relation("ReceivedMessage", fields: [receiverId], references: [Mat], onDelete: Restrict)
+  resource   resources?   @relation(fields: [resourceId], references: [id])
+  sender     student      @relation("SentMessage", fields: [senderId], references: [Mat])
+
+  @@index([groupId])
+  @@index([senderId])
+  @@index([receiverId])
+  @@index([resourceId])
+}
+
+model groups {
+  id                      Int                      @id @default(autoincrement())
+  type                    groups_type
+  visibility              groups_visibility
+  name                    String                   @db.VarChar(50)
+  description             String                   @db.Text
+  validation              groups_validation        @default(waiting)
+  createdAt               DateTime                 @default(now())
+  groupMembers            groupMembers[]
+  messages                message[]
+  notifications           notification[]
+  resources               resources[]
+  system_group_permission system_group_permission?
+}
+
+model notification {
+  id        Int               @id @default(autoincrement())
+  titre     String            @default("message") @db.VarChar(40)
+  content   String            @db.Text
+  studentId Int
+  groupId   Int?
+  type      notification_type @default(group)
+  isRead    Boolean           @default(false)
+  sentAt    DateTime          @default(now())
+  group     groups?           @relation(fields: [groupId], references: [id], onDelete: Restrict)
+
+  @@index([groupId])
+  @@index([studentId])
+}
+
+model resources {
+  id         Int                  @id @default(autoincrement())
+  name       String               @db.VarChar(50)
+  filepath   String               @db.Text
+  size       Float
+  studentId  Int
+  validation resources_validation @default(waiting)
+  groupId    Int?
+  uploadedAt DateTime             @default(now())
+  fileType   String?
+  mimeType   String?
+  messages   message[]
+  group      groups?              @relation(fields: [groupId], references: [id], onDelete: Restrict)
+  student    student              @relation(fields: [studentId], references: [Mat])
+
+  @@index([groupId])
+  @@index([studentId])
+}
+
+model groupMembers {
+  id                      Int                       @id @default(autoincrement())
+  role                    groupMembers_role         @default(member)
+  status                  groupMembers_status       @default(waiting)
+  date_adhesion           DateTime?                 @db.DateTime(0)
+  studentId               Int
+  groupId                 Int
+  groups                  groups                    @relation(fields: [groupId], references: [id], onUpdate: Restrict, map: "groupMembers_fkey")
+  student                 student                   @relation(fields: [studentId], references: [Mat], onUpdate: Restrict, map: "student_group1_fkey")
+  group_member_permission group_member_permission[]
+
+  @@unique([studentId, groupId])
+  @@index([groupId], map: "groupMembers_fkey")
+}
+
+model group_member_permission {
+  id                    Int          @id @default(autoincrement())
+  groupMemberId         Int
+  canAcceptMembers      Boolean      @default(true)
+  canValidateRessources Boolean      @default(true)
+  canDeleteMessages     Boolean      @default(true)
+  canEditGroupInfo      Boolean      @default(true)
+  createdAt             DateTime     @default(now()) @db.DateTime(0)
+  updatedAt             DateTime     @default(now()) @db.DateTime(0)
+  groupMembers          groupMembers @relation(fields: [groupMemberId], references: [id], onDelete: Cascade, map: "group_member_permission_ibfk_1")
+
+  @@index([groupMemberId], map: "groupMemberId")
+}
+
+model system_group_permission {
+  id                    Int      @id @default(autoincrement())
+  groupId               Int      @unique
+  maxMember             Int      @default(500)
+  allowFileSharing      Boolean  @default(true)
+  allowPublicVisibility Boolean  @default(true)
+  createdAt             DateTime @default(now()) @db.DateTime(0)
+  updatedAt             DateTime @default(now()) @db.DateTime(0)
+  maxFileSizeMB         Int      @default(100)
+  allowMessages         Boolean  @default(true)
+  autoAccept            Boolean  @default(true)
+  groups                groups   @relation(fields: [groupId], references: [id], onDelete: Cascade)
+}
+
+enum groups_type {
+  module
+  projet
+  revision
+}
+
+enum notification_type {
+  group
+  system
+}
+
+enum resources_validation {
+  accepted
+  rejected
+  waiting
+}
+
+enum message_type {
+  text
+  image
+  video
+  file
+}
+
+enum student_role {
+  student
+  admin
+}
+
+enum groups_visibility {
+  public
+  private
+}
+
+enum groupMembers_role {
+  admin
+  member
+}
+
+enum groupMembers_status {
+  accept
+  waiting
+}
+
+enum groups_validation {
+  valide
+  waiting
+}
