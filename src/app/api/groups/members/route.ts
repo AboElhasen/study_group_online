@@ -108,10 +108,10 @@ export async function DELETE(req:Request){
   const studentId=searchParams.get('studentId');
   const groupId=searchParams.get('groupId');
   if(!session){
-    return null
+    return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
   }
   if(!studentId || !groupId){
-    return null;
+     return NextResponse.json({ error: 'Bad Request' }, { status: 400 });
   }
   //    OR: [ { receiverId: senderId, senderId: receiver },
   try{
