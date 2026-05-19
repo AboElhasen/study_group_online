@@ -9,13 +9,13 @@ export async function GET(req:Request) {
   const type=searchParams.get("type") || null;
   const groupsIds=searchParams.get("groupsIds") || null;
   if (!session) {
-    return NextResponse.json({ error: "غير مصرح" }, { status: 401 });
+    return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
   }
       const currentStudent = await prisma.student.findUnique({
     where: { email: session.user.email! },
   });
  if(!currentStudent){
-  return null;
+   return NextResponse.json({ error: 'Not found' }, { status: 404 });
  }
   if(type==='1'){
 
@@ -93,7 +93,7 @@ export async function DELETE(req:Request){
 
    const session = await getServerSession();
   if (!session) {
-    return NextResponse.json({ error: "غير مصرح" }, { status: 401 });
+    return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
   }
   const searshParams=new URL(req.url).searchParams;
   const Mat=searshParams.get("Mat");
