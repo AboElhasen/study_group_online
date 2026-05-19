@@ -5,9 +5,9 @@ import prisma from '../../../../../../prisma/client';
 
 export async function POST(req: Request) {
   const session = await getServerSession();
-  /*if (!session) {
+  if (!session) {
     return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
-  }*/
+  }
   const { value,groupId,permission } = await req.json();
   if (!groupId) {
     return NextResponse.json({ error: 'id requis' }, { status: 400 });
