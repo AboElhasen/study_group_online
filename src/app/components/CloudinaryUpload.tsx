@@ -17,7 +17,7 @@ export function CloudinaryUpload({ onUpload, acceptType, children }: CloudinaryU
 
   return (
     <CldUploadWidget
-      uploadPreset="ml_default"
+      uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
       onSuccess={(result: any) => {
         if (result.info?.secure_url) {
           onUpload({
