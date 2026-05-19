@@ -78,24 +78,4 @@ export const { handlers: { GET, POST }, auth, signIn, signOut } = NextAuth({
 });
 
 // --- تعديل أنواع الـ TypeScript لتتعرف على الـ id والـ role بدون أخطاء ---
-declare module "next-auth" {
-  interface User {
-    role?: string;
-  }
-  interface Session {
-    user: {
-      id: number;
-      name: string;
-      email: string;
-      image: string | null;
-      role: string;
-    }
-  }
-}
 
-declare module "next-auth/jwt" {
-  interface JWT {
-    id?: number;
-    role?: string;
-  }
-}
