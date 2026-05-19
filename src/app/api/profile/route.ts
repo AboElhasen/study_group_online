@@ -7,7 +7,7 @@ export async function GET(req: Request){
     const {searchParams}= new URL(req.url);
     const Mat=searchParams.get('Mat')
    if(!session){
-    return NextResponse.json({message:"غير مصرح"},{status:401});
+    return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
    }
   const profile = await prisma.profile.findUnique({
     where:{studentId: parseInt(Mat!)},
