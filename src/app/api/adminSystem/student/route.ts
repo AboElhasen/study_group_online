@@ -7,13 +7,13 @@ export async function GET(req:Request) {
   const {searchParams} = new URL(req.url);
   const groupsIds=searchParams.get("groupsIds") || null;
   if (!session) {
-    return NextResponse.json({ error: "غير مصرح" }, { status: 401 });
+    return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
   }
       const currentStudent = await prisma.student.findUnique({
     where: { email: session.user.email! },
   });
  if(!currentStudent){
-  return null;
+   return NextResponse.json({ error: 'No Found' }, { status: 404 });
  }
 
 const students = await prisma.student.findMany({
