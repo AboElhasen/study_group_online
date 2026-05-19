@@ -172,7 +172,7 @@ export default function Dashboard() {
             <div key={i} className={styles.request}>
             <div style={{display:'flex',flexDirection:'row',alignItems:'center',gap:'10px'}}>
                <div>
-                <img style={{borderRadius: "100%",width:'100px',height:'100px'}} src={item.profile?.image} alt={item.name} />
+                <img style={{borderRadius: "100%",width:'100px',height:'100px'}} src={item.profile?.image || '/imageSystem/noPhoto.jfif'} alt={item.name} />
                 </div>
               <div>
                 <p className={styles.name}>{item.name}</p>
