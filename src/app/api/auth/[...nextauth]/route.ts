@@ -1,8 +1,8 @@
-import NextAuth from "next-auth";
+import NextAuth ,{AuthError }  from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { prisma } from "../../../../../prisma/client"; // تأكد من استيراد prisma المصلح الذي يحتوي على قوسين { prisma }
+import  prisma  from "../../../../../prisma/client"; // تأكد من استيراد prisma المصلح الذي يحتوي على قوسين { prisma }
 import bcrypt from "bcryptjs";
-import { CredentialsSignin } from "next-auth"; // 👈 استورد هذا الكلاس في الأعلى
+// 👈 استورد هذا الكلاس في الأعلى
  
 
 export const { handlers: { GET, POST }, auth, signIn, signOut } = NextAuth({
@@ -15,7 +15,7 @@ export const { handlers: { GET, POST }, auth, signIn, signOut } = NextAuth({
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-    throw new CredentialsSignin("الرجاء إدخال البريد الإلكتروني وكلمة المرور");
+    throw new AuthError("الرجاء إدخال البريد الإلكتروني وكلمة المرور");
         }
     
         // البحث عن الطالب في قاعدة البيانات
@@ -25,13 +25,13 @@ export const { handlers: { GET, POST }, auth, signIn, signOut } = NextAuth({
         });
 
         if (!student) {
-          throw new CredentialsSignin("البريد الإلكتروني أو كلمة المرور غير صحيحة");
+          throw new AuthError("البريد الإلكتروني أو كلمة المرور غير صحيحة");
         }
 
         // التحقق من كلمة المرور باستخدام bcryptjs المتوافق مع Netlify
         const isValid = await bcrypt.compare(credentials.password as string, student.password);
         if (!isValid) {
-           throw new CredentialsSignin("البريد الإلكتروني أو كلمة المرور غير صحيحة");
+           throw new AuthError("البريد الإلكتروني أو كلمة المرور غير صحيحة");
         }
 
         // إرجاع بيانات الطالب
